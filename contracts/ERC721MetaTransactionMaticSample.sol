@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-
+import "@openzeppelin/contracts/utils/Counters.sol";
 /**
  * https://github.com/maticnetwork/pos-portal/blob/master/contracts/common/ContextMixin.sol
  */
@@ -219,7 +219,9 @@ contract NativeMetaTransaction is EIP712Base {
 }
 
 contract ERC721MetaTransactionMaticSample is ERC721, ContextMixin, NativeMetaTransaction {
-
+    using Counters for Counters.Counter;
+     Counters.Counter private _tokenIds;
+     mapping(uint256 => string) private _tokenURIs;
     constructor (string memory name_, string memory symbol_) ERC721(name_, symbol_) {
         _initializeEIP712(name_);
     }
@@ -249,4 +251,38 @@ contract ERC721MetaTransactionMaticSample is ERC721, ContextMixin, NativeMetaTra
         
         return ERC721.isApprovedForAll(_owner, _operator);
     }
+
+     function _setTokenURI(uint256 tokenId, string memory _tokenURI)
+        internal
+        virtual
+    {
+        _tokenURIs[tokenId] = _tokenURI;
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        require(
+            _exists(tokenId),
+            "ERC721Metadata: URI query for nonexistent token"
+        );
+        string memory _tokenURI = _tokenURIs[tokenId];
+        return _tokenURI;
+    }
+
+    function mint(address recipient, string memory uri)
+        public
+        returns (uint256)
+    {
+        _tokenIds.increment();
+        uint256 newItemId = _tokenIds.current();
+        _mint(recipient, newItemId);
+        _setTokenURI(newItemId, uri);
+        return newItemId;
+    }
+
 }
