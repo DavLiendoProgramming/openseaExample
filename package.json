@@ -1,8 +1,12 @@
 {
   "dependencies": {
+    "@maticnetwork/maticjs": "^2.0.44",
+    "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@openzeppelin/contracts": "~4.1.0",
+    "@truffle/hdwallet-provider": "^1.4.1",
     "eth-sig-util": "^3.0.1",
-    "hardhat": "^2.0.10"
+    "hardhat": "^2.0.10",
+    "web3": "^1.4.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.0",

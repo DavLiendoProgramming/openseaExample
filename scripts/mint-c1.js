@@ -1,5 +1,7 @@
 const hre = require('hardhat');
 async function main() {
+  const [signer] = await ethers.getSigners();
+  console.log('Signer address', signer.address);
   /**
    * Contract factory
    */
@@ -10,7 +12,7 @@ async function main() {
    * Owner of the nft and contract addresses
    */
   const WALLET_ADDRESS = '0x7e693A3E0132Fa9D24B883979d4e405A64D67361';
-  const CONTRACT_ADDRESS = '0x3D51c60a864857bEA6Ebefc8B6b126142FD4d436';
+  const CONTRACT_ADDRESS = '0x05E77Cb43d55EbFF082a7426166774ca853c51BB';
 
   /**
    * Returns a new instance of the Contract attached to a new address
